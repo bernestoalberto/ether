@@ -1,5 +1,5 @@
 let Web3 = require('web3');
-
+let Tx = require('ethereumjs-tx');
 let web3 = new Web3('https://mainnet.infura.io/v3/06c6b7b850dd43f9a5f69d563cb4c945');
 /*
 web3.eth.getBalance('0xad5c1e06baa53cb98126dd7de5c14b0f379ca38b',(err, wei)=>{
@@ -40,11 +40,15 @@ var abi = [{"constant":true,"inputs":[],"name":"mintingFinished","outputs":[{"na
 "name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,
 "inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},
 {"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"}];
+
+
+
+
 var contractAddress = '0xd26114cd6EE289AccF82350c8d8487fedB8A0C07';
+let anotherAddress ='0xd26114cd6EE289AccF82350c8d8487fedB8A0C07';
 
 var myContract = new web3.eth.Contract(abi, contractAddress);
 
-let anotherAddress ='0xd26114cd6EE289AccF82350c8d8487fedB8A0C07';
 
 myContract.methods.balanceOf(anotherAddress).call((err, result)=>{
     console.log(result);
@@ -54,3 +58,47 @@ myContract.methods.balanceOf(anotherAddress).call((err, result)=>{
 myContract.methods.name.call((err, result)=>{
 console.log(result);
 });
+
+
+Buffer.from();
+
+//Get Balance
+web3.eth.getBalance(account, (err, ba1)=> {
+    console.log('account 2 balance:',web3.utils.fromWei(bal,'ether'));
+});
+
+web3.eth.getTransactionCount(contractAddress , (err,txCount)=>{
+const data = '';
+//Build the transaction
+const txObject = {
+    nonce:  web3.utils.toHex(txCount) ,
+    to: anotherAddress,
+    value:      web3.utils.toHex(web3.utils.toWei('1','ether')),
+    gasLimit:      web3.utils.toHex(1000000) ,// raise this
+    gasPrice: web3.utils.toHex(web3.utils.toWei('10','gwei')),
+    data:data
+
+}
+//Sign the transaction
+const rx = new Tx(txObject);
+tx.sign(privateKey);
+
+//Broadcast the transaction
+web3.eth.sendSignedTransaction(raw, (err, txHash)=>{
+console.log('txHash', txHash);
+// Use this txHash to find the contract on Etherscan
+ });
+ console.log(txObject);
+const serializedTransaction = tx.toString('hrx');
+const raw = '0x' + serializedTransaction.toString('hex');
+
+});
+
+
+
+
+const daaptokenContract = web3.eth.Contract(abi, contractAddress);
+daaptokenContract.methods.call((err, result)=> {console.log(result)});
+console.log(daaptokenContract);
+
+
